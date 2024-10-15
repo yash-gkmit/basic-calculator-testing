@@ -1,0 +1,69 @@
+
+info:
+  title: Calculator API
+  version: 1.0.0
+  description: A simple calculator API that performs addition, subtraction, multiplication, and division.
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /calculate:
+    post:
+      summary: Perform a calculation
+      operationId: calculateOperation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                num1:
+                  type: number
+                  description: The first number.
+                  example: 5
+                num2:
+                  type: number
+                  description: The second number.
+                  example: 3
+                operator:
+                  type: string
+                  description: The operation to perform (add, sub, mul, div).
+                  example: add
+                email:
+                  type: string
+                  description: The email of the user.
+                  example: user@example.com
+      responses:
+        '200':
+          description: Successful calculation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: number
+                    description: The result of the calculation.
+                    example: 8
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: Cannot divide by zero
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message.
+                    example: Invalid operator
