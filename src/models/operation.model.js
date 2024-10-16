@@ -12,7 +12,7 @@ const operationModel = new mongoose.Schema({
     operator:{
         type:String,
         required:true,
-        enum: ['ADD', 'SUB', 'MUL', 'DIV'],
+        enum: ['add','subtract','multiply','divide'],
     },
     result:{
         type:Number,
@@ -20,7 +20,7 @@ const operationModel = new mongoose.Schema({
     email:{
         type:String,
     },
-    timestamp:{
+    createdAt:{
         type:Date,
         default: Date.now
     }

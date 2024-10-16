@@ -1,15 +1,15 @@
-
+openapi: 3.0.0
 info:
   title: Calculator API
+  description: Calulcate basic calculator operation and history.
   version: 1.0.0
-  description: A simple calculator API that performs addition, subtraction, multiplication, and division.
 servers:
-  - url: http://localhost:3000/api
+  - url: http://localhost:3000
 paths:
-  /calculate:
+  /operations:
     post:
-      summary: Perform a calculation
-      operationId: calculateOperation
+      summary: Perform an operation
+      description: Performs a basic arithmetic operation (ADD, SUB, MUL, DIV).
       requestBody:
         required: true
         content:
@@ -17,25 +17,23 @@ paths:
             schema:
               type: object
               properties:
-                num1:
+                operand1:
                   type: number
-                  description: The first number.
                   example: 5
-                num2:
+                operand2:
                   type: number
-                  description: The second number.
                   example: 3
                 operator:
                   type: string
-                  description: The operation to perform (add, sub, mul, div).
-                  example: add
-                email:
-                  type: string
-                  description: The email of the user.
-                  example: user@example.com
+                  enum: ["ADD", "SUB", "MUL", "DIV"]
+                  example: "ADD"
+              required:
+                - operand1
+                - operand2
+                - operator
       responses:
-        '200':
-          description: Successful calculation
+        '201':
+          description: Operation successful
           content:
             application/json:
               schema:
@@ -43,27 +41,80 @@ paths:
                 properties:
                   result:
                     type: number
-                    description: The result of the calculation.
                     example: 8
         '400':
           description: Invalid input
+    get:
+      summary: Get operation history
+      description: Fetches all operations performed by the user.
+      parameters:
+        - name: email
+          in: header
+          required: true
+          schema:
+            type: string
+            example: user@example.com
+      responses:
+        '200':
+          description: History fetched successfully
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: Error message.
-                    example: Cannot divide by zero
-        '500':
-          description: Server error
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: Error message.
-                    example: Invalid operator
+                type: array
+                items:
+                  $ref: '#/components/schemas/Operation'
+  /operations/{id}:
+    delete:
+      summary: Delete an operation by ID
+      description: Deletes a specific operation by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 609f5b2c8b98c5e1a9d88f2a
+      responses:
+        '200':
+          description: Operation deleted successfully
+        '404':
+          description: Operation not found
+  /operations:
+    delete:
+      summary: Reset all operations for a user
+      description: Deletes all operations performed by a user.
+      parameters:
+        - name: email
+          in: header
+          required: true
+          schema:
+            type: string
+            example: user@example.com
+      responses:
+        '200':
+          description: All operations reset
+components:
+  schemas:
+    Operation:
+      type: object
+      properties:
+        operand1:
+          type: number
+          example: 5
+        operand2:
+          type: number
+          example: 3
+        operator:
+          type: string
+          enum: ["ADD", "SUB", "MUL", "DIV"]
+          example: ADD
+        result:
+          type: number
+          example: 8
+        email:
+          type: string
+          example: user@example.com
+        timestamp:
+          type: string
+          format: date-time
+          example: '2024-10-16T12:45:00Z'

@@ -3,9 +3,9 @@ const dotenv = require('dotenv')
 
 dotenv.config();
 
-let isConnected = false // track the connection
+let isConnected = false
 
-module.exports.connectToDB = async () => {
+module.exports.dbConnection = async () => {
     mongoose.set("strictQuery", true)
 
     if (isConnected) {
@@ -14,7 +14,7 @@ module.exports.connectToDB = async () => {
     }
 
     try {
-        await mongoose.connect(process.env.MONGODB_URI, {
+        await mongoose.connect(process.env.MONGO_URI, {
             dbName: "Calculator",
         })
 

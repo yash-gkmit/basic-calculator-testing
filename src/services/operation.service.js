@@ -1,21 +1,21 @@
 const Operation = require('../models/operation.model.js');
 
-const calculateOperation = async (payload, email) => {
+const computeOperation = async (payload, email) => {
     let result;
     const { operand1, operand2, operator } = payload;
 
     try {
         switch (operator) {
-            case 'ADD':
+            case 'add':
                 result = operand1 + operand2;
                 break;
-            case 'SUB':
+            case 'subtract':
                 result = operand1 - operand2;
                 break;
-            case 'MUL':
+            case 'multiply':
                 result = operand1 * operand2;
                 break;
-            case 'DIV':
+            case 'divide':
                 if (operand2 === 0) throw new Error('Cannot divide by zero');
                 result = operand1 / operand2;
                 break;
@@ -39,7 +39,7 @@ const calculateOperation = async (payload, email) => {
     }
 };
 
-const fetchOperationHistory = async (email) => {
+const getOperationHistory = async (email) => {
     try {
         const userHistory = await Operation.find({ email: email });
         return userHistory;
@@ -68,8 +68,8 @@ const clearOperationHistory = async (email) => {
 };
 
 module.exports = {
-    calculateOperation,
-    fetchOperationHistory,
+    computeOperation,
+    getOperationHistory,
     deleteOperationById,
     clearOperationHistory
 };
