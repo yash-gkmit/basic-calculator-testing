@@ -41,8 +41,8 @@ Just a basic app for calculating basic operation i.e.(add, sub, mul, div) for un
    ```bash
    git clone https://github.com/yourusername/calculator-api.git
    cd basic-calculator-testing
-
- Install dependencies:
+   
+   Install dependencies:
 
     ```bash
     npm install

@@ -1,8 +1,12 @@
-const { computeOperation, getOperationHistory, deleteOperationById, clearOperationHistory} = 
-require('../services/operation.service.js');
+const {
+    computeOperation,
+    getOperationHistory,
+    deleteOperationById,
+    clearOperationHistory,
+} = require("../services/operation.service.js");
 
-const performOperation = async (req, res) => {
-    const email = req.headers['email'];
+const performOperation = async(req, res) => {
+    const email = req.headers["email"];
     const payload = req.body;
 
     try {
@@ -13,8 +17,8 @@ const performOperation = async (req, res) => {
     }
 };
 
-const getHistory = async (req, res) => {
-    const email = req.headers['email'];
+const getHistory = async(req, res) => {
+    const email = req.headers["email"];
 
     try {
         const userHistory = await getOperationHistory(email);
@@ -24,7 +28,7 @@ const getHistory = async (req, res) => {
     }
 };
 
-const clearHistory = async (req, res) => {
+const clearHistory = async(req, res) => {
     const { id } = req.params;
 
     try {
@@ -35,12 +39,12 @@ const clearHistory = async (req, res) => {
     }
 };
 
-const resetHistory = async (req, res) => {
-    const email = req.headers['email'];
+const resetHistory = async(req, res) => {
+    const email = req.headers["email"];
 
     try {
         await clearOperationHistory(email);
-        res.status(200).send('History clear completely');
+        res.status(200).send("History clear completely");
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -50,5 +54,5 @@ module.exports = {
     performOperation,
     getHistory,
     clearHistory,
-    resetHistory
+    resetHistory,
 };

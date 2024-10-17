@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const Operation = require('../src/models/operation.model.js');
-const {
-  computeOperation,
-  getOperationHistory,
-  deleteOperationById,
-  clearOperationHistory
-} = require('../src/services/operation.service.js');
+const {computeOperation,getOperationHistory,deleteOperationById,clearOperationHistory} = require('../src/services/operation.service.js');
 
 jest.mock('../src/models/operation.model.js'); 
 
@@ -23,31 +18,31 @@ describe('Operation Service Test Cases', () => {
   });
 
   it('should perform addition correctly', async () => {
-    const payload = { operand1: 5, operand2: 3, operator: 'ADD' };
+    const payload = { operand1: 5, operand2: 3, operator: 'add' };
     const result = await computeOperation(payload, 'user@example.com');
     expect(result).toBe(8);
   });
 
   it('should perform subtraction correctly', async () => {
-    const payload = { operand1: 10, operand2: 4, operator: 'SUB' };
+    const payload = { operand1: 10, operand2: 4, operator: 'subtract' };
     const result = await computeOperation(payload, 'user@example.com');
     expect(result).toBe(6);
   });
 
   it('should perform multiplication correctly', async () => {
-    const payload = { operand1: 4, operand2: 5, operator: 'MUL' };
+    const payload = { operand1: 4, operand2: 5, operator: 'multiply' };
     const result = await computeOperation(payload, 'user@example.com');
     expect(result).toBe(20);
   });
 
   it('should perform division correctly', async () => {
-    const payload = { operand1: 20, operand2: 4, operator: 'DIV' };
+    const payload = { operand1: 20, operand2: 4, operator: 'divide' };
     const result = await computeOperation(payload, 'user@example.com');
     expect(result).toBe(5);
   });
 
   it('should throw error when dividing by zero', async () => {
-    const payload = { operand1: 20, operand2: 0, operator: 'DIV' };
+    const payload = { operand1: 20, operand2: 0, operator: 'divide' };
     await expect(computeOperation(payload, 'user@example.com')).rejects.toThrow('Cannot divide by zero');
   });
 
@@ -57,7 +52,7 @@ describe('Operation Service Test Cases', () => {
   });
 
   it('should save operation to history', async () => {
-    const payload = { operand1: 5, operand2: 3, operator: 'ADD' };
+    const payload = { operand1: 5, operand2: 3, operator: 'add' };
     const expectedResult = { operand1: 5, operand2: 3, operator: 'ADD', result: 8, email: 'user@example.com' };
     operationCreateMock.mockResolvedValue(expectedResult);
 
@@ -69,8 +64,8 @@ describe('Operation Service Test Cases', () => {
   it('should fetch history for a user', async () => {
     const email = 'user@example.com';
     const mockHistory = [
-      { operand1: 5, operand2: 3, operator: 'ADD', result: 8, email },
-      { operand1: 10, operand2: 2, operator: 'SUB', result: 8, email }
+      { operand1: 5, operand2: 3, operator: 'add', result: 8, email },
+      { operand1: 10, operand2: 2, operator: 'subtract', result: 8, email }
     ];
 
     operationFindMock.mockResolvedValue(mockHistory);

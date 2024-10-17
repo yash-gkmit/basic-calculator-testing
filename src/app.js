@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const dotenv = require('dotenv');
 const { dbConnection } = require('./config/database.js');
@@ -10,7 +9,7 @@ const app = express();
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const path = require('path');
-const swaggerDocument = YAML.load(path.join(__dirname, './swagger/swagger.yaml'));
+const swaggerDocument=YAML.load(path.join(__dirname, './swagger/swagger.yaml'));
 
 dotenv.config();
 

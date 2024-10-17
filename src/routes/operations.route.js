@@ -1,10 +1,6 @@
 const express = require('express');
-const {
-    performOperation,
-    getHistory,
-    clearHistory,
-    resetHistory
-} = require('../controllers/operation.controller.js')
+const { performOperation, getHistory, clearHistory, resetHistory} 
+     = require('../controllers/operation.controller.js');
 
 const router = express.Router();
 
